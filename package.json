@@ -1,0 +1,103 @@
+{
+  "name": "msw-storybook-addon-close",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.5.0",
+    "@emotion/styled": "^11.3.0",
+    "@formatjs/cli": "^4.4.0",
+    "@keyloop/react": "^3.0.2",
+    "@mui/icons-material": "^5.1.0",
+    "@mui/lab": "^5.0.0-alpha.53",
+    "@mui/material": "^5.1.0",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.3.12",
+    "@storybook/testing-react": "0.0.22",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/css-mediaquery": "^0.1.1",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.7",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
+    "@types/react-router-dom": "^5.3.2",
+    "babel-plugin-formatjs": "^10.3.11",
+    "cross-env": "^7.0.3",
+    "css-mediaquery": "^0.1.2",
+    "customize-cra": "^1.0.0",
+    "msw": "^0.35.0",
+    "msw-storybook-addon": "^1.4.1",
+    "prettier": "^2.4.1",
+    "react": "^17.0.2",
+    "react-app-rewired": "^2.1.8",
+    "react-dom": "^17.0.2",
+    "react-intl": "^5.21.0",
+    "react-query": "^3.32.1",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "^4.0.3",
+    "storybook-dark-mode": "^1.0.8",
+    "typescript": "^4.4.4",
+    "webpack-bundle-analyzer": "^4.5.0"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "build:analyze": "yarn build -- --analyze",
+    "test:coverage": "react-app-rewired test --passWithNoTests --coverage --watchAll=false",
+    "test:ci": "cross-env CI=true yarn test:coverage -- --ci",
+    "lint": "tsc --noEmit && eslint \"src/**/*.{js,ts,tsx}\" \".storybook\" --max-warnings 0",
+    "storybook": "start-storybook -s public -p 6006",
+    "storybook:build": "build-storybook -s public",
+    "intl:extract": "formatjs extract \"src/**/*.ts*\" --out-file lang/en.json --ignore \"src/**/*.test.tsx\" --ignore \"src/**/*.stories.tsx\" --ignore \"src/react-app-env.d.ts\"",
+    "intl:compile": "formatjs compile lang/en.json --out-file src/i18n/en.json",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      },
+      {
+        "files": [
+          "**/*.ts*"
+        ],
+        "rules": {
+          "no-duplicate-imports": "error"
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">= 14.x",
+    "npm": "6.x"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}
