@@ -2,15 +2,9 @@ const path = require("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
 
 module.exports = {
-  addons: [
-    "@storybook/preset-create-react-app",
-    {
-      name: "@storybook/addon-essentials",
-      options: { backgrounds: false },
-    },
-    "storybook-dark-mode",
-  ],
+  addons: ["@storybook/preset-create-react-app", "@storybook/addon-essentials"],
   stories: ["../src/**/*.stories.@(tsx|mdx)"],
+  staticDirs: ["../public"],
   webpackFinal: async (config) => {
     return {
       ...config,

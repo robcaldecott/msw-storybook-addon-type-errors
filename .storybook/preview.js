@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider, setLogger } from "react-query";
 import { initialize, mswDecorator } from "msw-storybook-addon";
-import { useDarkMode } from "storybook-dark-mode";
-import { ThemeProvider, useThemeMode } from "@keyloop/react";
+import { CssBaseline } from "@mui/material";
 
 // Disable `react-query` error logging when running tests.
 if (process.env.NODE_ENV === "test") {
@@ -19,13 +17,6 @@ initialize({ onUnhandledRequest: "bypass" });
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
-};
-
-const ThemeWrapper = ({ children }) => {
-  const dark = useDarkMode();
-  const { setMode } = useThemeMode();
-  useEffect(() => void setMode(dark ? "dark" : "light"), [dark, setMode]);
-  return children;
 };
 
 export const decorators = [
@@ -45,11 +36,8 @@ export const decorators = [
       <QueryClientProvider client={queryClient}>
         <IntlProvider locale="en">
           <MemoryRouter>
-            <ThemeProvider initialMode={useDarkMode() ? "dark" : "light"}>
-              <ThemeWrapper>
-                <Story />
-              </ThemeWrapper>
-            </ThemeProvider>
+            <CssBaseline />
+            <Story />
           </MemoryRouter>
         </IntlProvider>
       </QueryClientProvider>

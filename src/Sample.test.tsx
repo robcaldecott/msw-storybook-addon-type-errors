@@ -6,6 +6,7 @@ import * as stories from "./Sample.stories";
 const { Data, Error } = composeStories(stories);
 
 afterAll(() => {
+  // ts(2339) error
   getWorker().close();
 });
 

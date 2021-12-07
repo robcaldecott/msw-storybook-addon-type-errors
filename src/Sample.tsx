@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { Home, Replay } from "@mui/icons-material";
 import { useQuery } from "react-query";
-import { http } from "@keyloop/react";
 
 /**""
  * Sample component that makes an API call using `react-query`.
@@ -21,17 +20,25 @@ function Sample() {
   const intl = useIntl();
   const { isLoading, isSuccess, isError, data, refetch } = useQuery<string[]>(
     "states",
-    () => http.get("/api/states")
+    () =>
+      fetch("/api/states").then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
   );
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        {/* Nested grid for a responsive design on smaller screens. */}
         <Grid container spacing={2}>
           <Grid item xs={12} sm>
             <Typography variant="h5">
-              <FormattedMessage defaultMessage="React Query Sample Page" />
+              <FormattedMessage
+                id="title"
+                defaultMessage="React Query Sample Page"
+              />
             </Typography>
           </Grid>
           <Grid item xs={12} sm="auto">
@@ -42,7 +49,7 @@ function Sample() {
               component={Link}
               to="/"
             >
-              <FormattedMessage defaultMessage="Home" />
+              <FormattedMessage id="home" defaultMessage="Home" />
             </Button>
           </Grid>
         </Grid>
@@ -52,7 +59,10 @@ function Sample() {
         <Paper>
           {isLoading && (
             <List
-              aria-label={intl.formatMessage({ defaultMessage: "Loading..." })}
+              aria-label={intl.formatMessage({
+                id: "loading",
+                defaultMessage: "Loading...",
+              })}
             >
               {[...Array(20).keys()].map((key) => (
                 <ListItem key={key}>
@@ -73,7 +83,10 @@ function Sample() {
           {isError && (
             <Box padding={2}>
               <Typography color="error" gutterBottom>
-                <FormattedMessage defaultMessage="An error occurred!" />
+                <FormattedMessage
+                  id="error"
+                  defaultMessage="An error occurred!"
+                />
               </Typography>
               <Button
                 variant="outlined"
@@ -81,7 +94,7 @@ function Sample() {
                 startIcon={<Replay />}
                 onClick={() => refetch()}
               >
-                <FormattedMessage defaultMessage="Try again" />
+                <FormattedMessage id="retry" defaultMessage="Try again" />
               </Button>
             </Box>
           )}
